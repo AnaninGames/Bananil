@@ -162,6 +162,10 @@ button {
 }
 
 
+#Music{
+  z-index: 5; /* <- troque de -1 para 10 */
+}
+
 
 
 
@@ -199,7 +203,7 @@ button {
     <div id="macaco-container"></div>
     </div> 
     </body>
-    <audio controls autoplay loop>
+    <audio id="Music" controls autoplay loop>
     <source src="https://github.com/AnaninGames/Bananil/raw/refs/heads/main/Uga%20Chaka.mp3" type="audio/mpeg">
     </audio>
     <script>
@@ -401,7 +405,7 @@ button {
   }
 
 function tocarSom(event) {
-  const audio = new Audio("https://github.com/AnaninGames/Bananil/raw/refs/heads/main/monkey-128368.mp3");
+  const audio = new Audio("https://github.com/AnaninGames/Bananil/raw/refs/heads/main/OLHA%20O%20MACACO!%20Meme%20Estourado.mp3");
   audio.play();
 
   const audio2 = new Audio("https://github.com/AnaninGames/Bananil/raw/refs/heads/main/Needle%20Hit%20(Cartoon%20Sound)%20-%20Sound%20Effect%20for%20editing.mp3");
