@@ -29,7 +29,7 @@ body {
   background-color: #f7f333;
   padding: 20px 0;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  z-index: 1;
+  z-index: 2;
 }
 
 h1 {
@@ -47,6 +47,7 @@ h1 {
 }
 
 #dados {
+  z-index: 2; /* <- troque de -1 para 10 */
   margin-top: 30px;
   padding: 20px;
   background-color: rgb(66, 89, 216);
@@ -138,6 +139,30 @@ button {
   animation: voar linear infinite;
 }
 
+#macaco-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto; /* antes era "none" */
+  overflow: hidden;
+  z-index: 1; /* <- troque de -1 para 10 */
+}
+
+.macaco:hover{
+  cursor: pointer;
+}
+.macaco {
+  pointer-events: auto;
+  position: absolute;
+  width: 100px;
+  height: auto;
+  animation: voar linear infinite;
+}
+
+
+
 
 
 @keyframes voar {
@@ -145,11 +170,16 @@ button {
     transform: translateY(0) rotate(0deg);
     opacity: 1;
   }
+  75% {
+    transform: translateY(-120vh) rotate(180deg);
+    opacity: 1;
+  }
   100% {
-    transform: translateY(-120vh) rotate(360deg);
+    transform: translateY(-150vh) rotate(360deg);
     opacity: 0;
   }
 }
+
 
 </style>
 </head>
@@ -162,11 +192,11 @@ button {
     </div>
     </div>
    <div id="Tudo">
-    <br>
     <div id="dados">
         <button onclick="carregarCadastro()">Cadastrar</button>
         <button onclick="carregarLogin()">Login</button>
     </div> 
+    <div id="macaco-container"></div>
     </div> 
     </body>
     <audio controls autoplay loop>
@@ -335,27 +365,56 @@ button {
             localStorage.setItem("saldols", saldo);
         }
 
-    const bananaContainer = document.getElementById('banana-container');
+  const bananaContainer = document.getElementById('banana-container');
   const bananaImg = 'https://ceagesp.gov.br/wp-content/uploads/2019/12/Banana_pratapng-328x328.png'; // imagem PNG com fundo transparente
+
+  const mamacoContainer = document.getElementById('macaco-container');
+  const mamacoImg = 'https://github.com/AnaninGames/Bananil/blob/main/macaco.png?raw=true'; // imagem PNG com fundo transparente
 
   function criarBanana() {
     const banana = document.createElement('img');
     banana.src = bananaImg;
     banana.classList.add('banana');
 
-    // posições e animações aleatórias
     banana.style.left = `${Math.random() * 100}vw`;
-    banana.style.top = `${Math.random() * 100 + 100}vh`; // começa fora da tela
+    banana.style.top = `${Math.random() * 100 + 100}vh`; 
     banana.style.animationDuration = `${5 + Math.random() * 5}s`;
     banana.style.transform = `rotate(${Math.random() * 360}deg)`;
 
     bananaContainer.appendChild(banana);
 
-    // remover banana depois da animação
-    setTimeout(() => banana.remove(), 25000);
+    setTimeout(() => banana.remove(), 35000);
   }
 
-  // criar várias bananas de tempo em tempo
+    function criarMamaco() {
+    const macaco = document.createElement('img');
+    macaco.src = mamacoImg;
+    macaco.classList.add('macaco');
+
+    macaco.style.left = `${Math.random() * 100}vw`;
+    macaco.style.top = `${Math.random() * 100 + 100}vh`;
+    macaco.style.animationDuration = `${5 + Math.random() * 5}s`;
+    macaco.style.transform = `rotate(${Math.random() * 360}deg)`;
+    mamacoContainer.appendChild(macaco);
+    macaco.addEventListener("click", tocarSom);
+    setTimeout(() => macaco.remove(), 35000);
+  }
+
+function tocarSom(event) {
+  const audio = new Audio("https://github.com/AnaninGames/Bananil/raw/refs/heads/main/monkey-128368.mp3");
+  audio.play().catch(e => console.error("Erro ao tocar o som:", e));
+
+  const macacoClicado = event.target;
+  macacoClicado.src = "https://i.imgur.com/Lk7cHNi.png";
+
+  // opcional: volta ao normal depois de 2s
+  setTimeout(() => {
+    macacoClicado.src = mamacoImg;
+  }, 2000);
+}
+
+
+  setInterval(criarMamaco, 1000);
   setInterval(criarBanana, 100);
     </script>
 </html>
