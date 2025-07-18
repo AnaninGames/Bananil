@@ -405,12 +405,8 @@ function tocarSom(event) {
   audio.play().catch(e => console.error("Erro ao tocar o som:", e));
 
   const macacoClicado = event.target;
-  macacoClicado.src = "https://i.imgur.com/Lk7cHNi.png";
-
-  // opcional: volta ao normal depois de 2s
-  setTimeout(() => {
-    macacoClicado.src = mamacoImg;
-  }, 2000);
+  macacoClicado.src = "https://github.com/AnaninGames/Bananil/blob/main/65cfa2a48d910.png?raw=true";
+  macacoClicado.remove("click", tocarSom);
 }
 
 
