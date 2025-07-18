@@ -402,7 +402,10 @@ button {
 
 function tocarSom(event) {
   const audio = new Audio("https://github.com/AnaninGames/Bananil/raw/refs/heads/main/monkey-128368.mp3");
-  audio.play().catch(e => console.error("Erro ao tocar o som:", e));
+  audio.play();
+
+  const audio2 = new Audio("ttps://github.com/AnaninGames/Bananil/raw/refs/heads/main/Hit.wav");
+  audio2.play();
 
   const macacoClicado = event.target;
   macacoClicado.src = "https://github.com/AnaninGames/Bananil/blob/main/65cfa2a48d910.png?raw=true";
