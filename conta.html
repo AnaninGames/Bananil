@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conta</title>
+    <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #5fe981;
+  font-family: sans-serif;
+  padding-top: 80px;
+}
+
+#Topo {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  text-align: center;
+  background-color: #f7f333;
+  padding: 20px 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+h1 {
+  font-size: 4rem;
+  color: blue;
+}
+
+#Tudo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  width: 100%;
+}
+
+#dados {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: rgb(66, 89, 216);
+  border: 6px outset;
+  border-radius: 15px;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.5);
+  border-color: aquamarine;
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+input:hover, button:hover {
+   background-color: #f7f333;
+}
+
+select:hover, option:hover {
+   background-color: aquamarine;
+}
+
+input {
+    font-size: 24px;
+    border-radius: 8px;
+    width: 100%;
+    height: 50px;
+    font-weight: bolder;
+    text-align: left;
+    margin-bottom: 10px;
+    background-color: rgb(255, 255, 255);
+    padding-right: 10px;
+}
+
+label{
+    color: #f7f333;
+    font-size: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bolder;
+}
+
+select{
+    font-size: 24px;
+}
+
+button {
+    width: 100%;
+    height: 65px;
+    margin: 4px 1%;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 18px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 2px 2px rgb(0, 0, 0);
+}
+
+.destaque {
+  color: #93fab6; /* amarelo ouro, pode trocar por qualquer cor */
+  font-weight: bolder;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px; /* espaço entre imagem e texto */
+}
+
+.logo {
+  height: 80px; /* ajuste como quiser */
+  width: auto;
+}
+
+#banana-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* permite clicar nos botões atrás */
+  overflow: hidden;
+  z-index: -1;
+}
+
+.banana {
+  position: absolute;
+  width: 80px;
+  height: auto;
+  animation: voar linear infinite;
+}
+
+
+
+@keyframes voar {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-120vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+</style>
+</head>
+    <body>
+    <div id="banana-container"></div>
+    <div id="Topo">
+    <div class="logo-container">
+        <img src="https://scontent-poa1-1.xx.fbcdn.net/v/t39.30808-6/277667955_275822371406641_5062652509539526457_n.png?_nc_cat=104&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeGmH3NBq5a_SNpDC4AZAPgQ_rTKcrSVADP-tMpytJUAM8limzUo6L4bjUrTuj8wPxbaGnkewVGVpdE-VOzudxiQ&_nc_ohc=qBDLwRmhv1wQ7kNvwHJqrz6&_nc_oc=AdkmFnHK4fHVFjkaSll6yTSe70vayJJU_0r-fIU6vSLoW6p3ehak5i78svN0W5dILAQ&_nc_zt=23&_nc_ht=scontent-poa1-1.xx&_nc_gid=MOdoUUj91zi3BQeqgu_6ig&oh=00_AfRn1p9EbGRr4AHCKdRMgy6MB5PvIr26eNkdhD04_96lzg&oe=687FBC53" alt="Logo" class="logo">
+        <h1>Banco Bananil</h1>
+    </div>
+    </div>
+   <div id="Tudo">
+    <br>
+    <div id="dados">
+        <button onclick="carregarCadastro()">Cadastrar</button>
+        <button onclick="carregarLogin()">Login</button>
+    </div> 
+    </div> 
+    </body>
+    <audio controls autoplay loop>
+    <source src="https://www.example.com/musica.mp3" type="audio/mpeg">
+    Seu navegador não suporta áudio.
+    </audio>
+    <script>
+        let cliente = [];
+        let tipoConta = [];
+        let limite = [];
+        let saldo = 0;
+        let deposito = [];
+
+        if (localStorage.clils){
+            cliente = JSON.parse(localStorage.getItem('clils'))
+        }
+
+        
+        if (localStorage.senhls){
+            senhas = JSON.parse(localStorage.getItem('clils'))
+        }
+
+
+        function cadCli()
+        {
+            cpfC = document.getElementById("cpf").value;
+            senhaC = document.getElementById("senha").value;
+            let clienteEncontrado = cliente.find(cli => cli.cpf === cpfC);
+
+            if (cpfC != "" && senha != ""){
+            if (clienteEncontrado){
+                alert("Uga Tchaca este cliente já existe Uga Tchaca");
+            } else {
+            let novoCli = {
+            nome: document.getElementById("cliente").value,  // pegue do input
+            cpf: document.getElementById("cpf").value,   // idem
+            senha: document.getElementById("senha").value // concatene cpf + senha, se quiser manter isso
+            };
+            
+            cliente.push(novoCli);
+            localStorage.clils = JSON.stringify(cliente);
+            alert("Uga Tchaca cliente cadastrado com SUCESSO! Uga Tchaca");
+            VerificarLogin();
+            }
+          } else {
+            alert("Uga Tchaca preencha todos os campos Uga Tchaca!");
+          }
+        }
+
+        function carregarCadastro(){
+            const container = document.getElementById("dados");
+            const div = document.createElement("div");
+
+            container.innerHTML = "";
+
+            div.className = "Cadastrar";
+            div.innerHTML = `
+            <label for="">Tipo de conta: </label>
+            <select name="" id="tipo_Conta">
+                <option value="escolha">Escolha...</option>
+                <option value="conta_corrente">Conta Corrente</option>
+                <option value="conta_poupanca">Conta Poupança</option>
+            </select>
+            <br><br>
+            <label for="cliente">Nome do Cliente: </label>
+            <input type="text" id="cliente" placeholder="Digite o nome aqui">
+            <br><br>
+            <label for="cliente">CPF: </label>
+            <input type="number" id="cpf" placeholder="Digite o cpf aqui">
+            <br><br>
+            <label for="senha">Senha: </label>
+            <input type="text" id="senha" placeholder="Digite a senha aqui">
+            <br><br>
+            <button onclick="cadCli()">Cadastrar</button>
+           <button onclick="voltarTelaInicial()">Voltar</button>
+            `;
+
+            container.appendChild(div);
+        }
+
+        function carregarLogin()
+        {
+            const container = document.getElementById("dados");
+            const div = document.createElement("div");
+
+            container.innerHTML = "";
+
+            div.className = "Login";
+            div.innerHTML = `
+            <label for="cliente">CPF: </label>
+            <input type="number" id="cpf" placeholder="Digite o cpf aqui">
+            <br><br>
+            <label for="senha">Senha: </label>
+            <input type="text" id="senha" placeholder="Digite a senha aqui">
+            <br><br>
+            <button onclick="VerificarLogin()">Login</button>
+            <button onclick="voltarTelaInicial()">Voltar</button>
+            `;
+
+            container.appendChild(div);
+        }
+
+
+        function VerificarLogin()
+        {
+            cpfC = document.getElementById("cpf").value;
+            senhaC = document.getElementById("senha").value;
+
+            let clienteEncontrado = cliente.find(cli => cli.cpf === cpfC && cli.senha === senhaC);
+
+            if (clienteEncontrado) {
+             opcoesCliente(clienteEncontrado.nome);
+            } else {
+             alert("CPF ou senha inválidos.");
+            }
+        }
+
+        function voltarTelaInicial()
+        {
+            const container = document.getElementById("dados");
+            const div = document.createElement("div");
+
+            container.innerHTML = "";
+
+            div.className = "Inicial";
+            div.innerHTML = `
+            <button onclick="carregarCadastro()">Cadastrar</button>
+            <button onclick="carregarLogin()">Login</button>
+            `;
+
+            container.appendChild(div);
+        }
+  
+
+        function opcoesCliente(nome){
+
+           const container = document.getElementById("dados");
+           const div = document.createElement("div");
+
+            container.innerHTML = "";
+
+            div.className = "ClienteOpcoes[]";
+            div.innerHTML = `
+             <label for="limite">Uga Tchaca! Olá <span class="destaque">${nome}</span>, seja bem-vindo de volta Uga Tchaca!</label>
+            <br><br>
+            <label for="limite">Limite: </label>
+            <input type="text" id="limite" value="0" maxlength="6">
+            <br><br>
+            <label for="saldo">Saldo</label>
+            <input type="number" id="saldo" value="0" readonly>
+            <br><br>
+            <label for="dep">Depósito</label>
+            <input type="number" id="dep" value="0">
+            <button onclick="depositaValor()">Depositar</button>
+            <br><br>
+            <label for="saq">Saque: </label>
+            <input type="text" id="saque" value="0">
+            <button>Sacar</button>
+            <button onclick="voltarTelaInicial()">Sair</button>
+            `;
+            container.appendChild(div);
+        }
+        function depositaValor(){
+            valor = parseFloat(document.getElementById("dep").value);
+            saldo += valor;
+            document.getElementById("saldo").value = parseFloat(saldo);
+            localStorage.setItem("saldols", saldo);
+        }
+
+    const bananaContainer = document.getElementById('banana-container');
+  const bananaImg = 'https://ceagesp.gov.br/wp-content/uploads/2019/12/Banana_pratapng-328x328.png'; // imagem PNG com fundo transparente
+
+  function criarBanana() {
+    const banana = document.createElement('img');
+    banana.src = bananaImg;
+    banana.classList.add('banana');
+
+    // posições e animações aleatórias
+    banana.style.left = `${Math.random() * 100}vw`;
+    banana.style.top = `${Math.random() * 100 + 100}vh`; // começa fora da tela
+    banana.style.animationDuration = `${5 + Math.random() * 5}s`;
+    banana.style.transform = `rotate(${Math.random() * 360}deg)`;
+
+    bananaContainer.appendChild(banana);
+
+    // remover banana depois da animação
+    setTimeout(() => banana.remove(), 25000);
+  }
+
+  // criar várias bananas de tempo em tempo
+  setInterval(criarBanana, 100);
+    </script>
+</html>
